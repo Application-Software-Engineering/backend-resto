@@ -17,18 +17,20 @@ API Backend untuk aplikasi restoran yang menyediakan fitur autentikasi pengguna,
 - Upload gambar menu dengan validasi tipe dan ukuran file
 - Sistem pemesanan dengan kalkulasi total otomatis
 - Middleware authentication untuk proteksi route
+- Rate limiting untuk mencegah abuse API
 
 ## Teknologi yang Digunakan
 
-| Teknologi    | Versi | Fungsi                |
-| ------------ | ----- | --------------------- |
-| Node.js      | 18+   | JavaScript runtime    |
-| Express      | 5.x   | Web framework         |
-| SQLite3      | 5.x   | Database              |
-| bcrypt       | 6.x   | Password hashing      |
-| jsonwebtoken | 9.x   | Autentikasi JWT       |
-| Multer       | 2.x   | File upload handler   |
-| dotenv       | 16.x  | Environment variables |
+| Teknologi          | Versi | Fungsi                |
+| ------------------ | ----- | --------------------- |
+| Node.js            | 18+   | JavaScript runtime    |
+| Express            | 5.x   | Web framework         |
+| SQLite3            | 5.x   | Database              |
+| bcrypt             | 6.x   | Password hashing      |
+| jsonwebtoken       | 9.x   | Autentikasi JWT       |
+| Multer             | 2.x   | File upload handler   |
+| express-rate-limit | 7.x   | Rate limiting         |
+| dotenv             | 16.x  | Environment variables |
 
 ## Instalasi
 

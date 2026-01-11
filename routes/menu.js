@@ -7,7 +7,6 @@ const path = require("path")
 
 const router = express.Router()
 
-// Create menu dengan upload gambar
 router.post("/", auth, upload.single("image"), (req, res) => {
     const { name, price, stock } = req.body
     const image = req.file ? `/uploads/menus/${req.file.filename}` : null
@@ -29,7 +28,6 @@ router.post("/", auth, upload.single("image"), (req, res) => {
     )
 })
 
-// Get all menus
 router.get("/", auth, (req, res) => {
     db.all(
         "SELECT * FROM menus WHERE owner_id = ?",
@@ -41,21 +39,17 @@ router.get("/", auth, (req, res) => {
     )
 })
 
-// Update menu (dengan optional upload gambar baru)
 router.put("/:id", auth, upload.single("image"), (req, res) => {
     const { name, price, stock } = req.body
 
-    // Cek dulu menu yang mau diupdate
     db.get(
         "SELECT * FROM menus WHERE id = ? AND owner_id = ?",
         [req.params.id, req.user.id],
         (err, menu) => {
             if (!menu) return res.status(403).json({ message: "Menu tidak ditemukan atau tidak memiliki akses" })
 
-            // Jika ada gambar baru, hapus gambar lama
             let newImage = menu.image
             if (req.file) {
-                // Hapus gambar lama jika ada
                 if (menu.image) {
                     const oldImagePath = path.join(__dirname, "..", menu.image)
                     if (fs.existsSync(oldImagePath)) {
@@ -65,11 +59,8 @@ router.put("/:id", auth, upload.single("image"), (req, res) => {
                 newImage = `/uploads/menus/${req.file.filename}`
             }
 
-            // Update database
             db.run(
-                `UPDATE menus 
-         SET name = ?, price = ?, stock = ?, image = ?
-         WHERE id = ? AND owner_id = ?`,
+                `UPDATE menus SET name = ?, price = ?, stock = ?, image = ? WHERE id = ? AND owner_id = ?`,
                 [name, price, stock, newImage, req.params.id, req.user.id],
                 function (err) {
                     if (err) return res.status(400).json({ message: "Gagal update menu" })
@@ -85,16 +76,13 @@ router.put("/:id", auth, upload.single("image"), (req, res) => {
     )
 })
 
-// Delete menu (hapus gambar juga)
 router.delete("/:id", auth, (req, res) => {
-    // Ambil data menu dulu untuk mendapatkan path gambar
     db.get(
         "SELECT * FROM menus WHERE id = ? AND owner_id = ?",
         [req.params.id, req.user.id],
         (err, menu) => {
             if (!menu) return res.status(403).json({ message: "Menu tidak ditemukan atau tidak memiliki akses" })
 
-            // Hapus file gambar jika ada
             if (menu.image) {
                 const imagePath = path.join(__dirname, "..", menu.image)
                 if (fs.existsSync(imagePath)) {
@@ -102,7 +90,6 @@ router.delete("/:id", auth, (req, res) => {
                 }
             }
 
-            // Hapus dari database
             db.run(
                 "DELETE FROM menus WHERE id = ? AND owner_id = ?",
                 [req.params.id, req.user.id],
