@@ -35,7 +35,7 @@ API Backend untuk aplikasi restoran yang menyediakan fitur autentikasi pengguna,
 Clone repository dan install dependencies
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Application-Software-Engineering/backend-resto
 cd backend
 npm install
 ```
