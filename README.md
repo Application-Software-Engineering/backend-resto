@@ -144,10 +144,17 @@ Content-Type: application/json
 
 {
   "items": [
-    { "menu_id": 1, "qty": 2, "price": 25000 }
+    { "menu_id": 1, "qty": 2 }
   ]
 }
 ```
+
+**Note**: Harga dan total akan dihitung otomatis dari database menu. Server akan:
+- Validasi ketersediaan menu dan stok
+- Hitung total berdasarkan harga menu saat ini
+- Update stok menu secara otomatis
+- Return `order_id` dan `total` yang telah dihitung
+
 
 ## Upload Gambar
 
