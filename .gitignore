@@ -8,6 +8,7 @@ package-lock.json
 # Database
 *.db
 *.db-journal
+data/
 
 # Uploads
 uploads/
