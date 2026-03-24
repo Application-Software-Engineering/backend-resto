@@ -40,4 +40,4 @@ app.use("/auth", authRoutes)
 app.use("/menus", menuRoutes)
 app.use("/orders", orderRoutes)
 
-app.listen(PORT, () => console.log(`API running http://localhost:${PORT}`))
+app.listen(PORT, '0.0.0.0', () => console.log(`API running http://localhost:${PORT}`))
